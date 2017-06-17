@@ -27,18 +27,22 @@
 	<hr>
 	<%= form_tag rooms_path, :method => "get" , id: "search-available-rooms-form" do%>
 
-       <%= label_tag(:event_type, "Tipo do Evento") %>
-       <%= select_tag(:event_type_id,options_for_select([['Repetitivo', 1], ['Não Repetitivo', 2]]), {class: 'form_control'}) %>
+    <%= label_tag(:event_type, "Tipo do Evento") %>
+    <%= select_tag(:event_type_id,options_for_select([['Repetitivo', 1], ['Não Repetitivo', 2]]), {class: 'form_control'}) %>
 
-		<%= label_tag(:capacity, "Capacidade") %>
-		<%= number_field_tag(:capacity, params[:capacity], in: 1..400, step: 1) %>
+    <%= label_tag(:capacity, "Capacidade") %>
+    <%= number_field_tag(:capacity, params[:capacity], in: 1..400, step: 1) %>
+       <br>
+    <%= label_tag(:room_type, "Tipo de Sala") %>
+    <%= select_tag(:room_type_class, options_from_collection_for_select(@room_types.sort.map {|k,v| [v,k]})) %>
 
-        <div id="search_btn" >
-          <i class="fa fa-search"></i>
-          <%= submit_tag "Pesquisar", :name => nil, :class => "btn btn-primary"%>
-        </div>
+    <div id="search_btn" >
+      <i class="fa fa-search"></i>
+      <%= submit_tag "Pesquisar", :name => nil, :class => "btn btn-primary"%>
+    </div>
 
     <% end %>
+
 </div>
 </div>
 
