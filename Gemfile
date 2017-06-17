@@ -34,6 +34,11 @@ gem 'jbuilder', '~> 2.5'
 
 gem 'mongoid', '~> 6.1.0'
 
+gem "therubyracer"
+gem "less-rails"
+gem "twitter-bootstrap-rails"
+
+
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
 

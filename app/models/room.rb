@@ -14,7 +14,7 @@ class RegularClassRoom < ClassRoom
   include Mongoid::Document
 end
 
-class SmartRoom < ClassRoom
+class SmartRoom < RegularClassRoom
   include Mongoid::Document
 end
 
