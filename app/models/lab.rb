@@ -16,4 +16,6 @@ end
 
 class ComputerLab < Lab
   include Mongoid::Document
+
+  field :for_students, type: Boolean
 end
