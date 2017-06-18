@@ -9,29 +9,24 @@ class Room
 
   def self.get_types
     rooms = self.descendants.map(&:name).sort
-    print(rooms)
-    types = []
+    types = {}
     rooms.each do |room|
-      type = {}
       case room
         when "RegularClassRoom"
-          type[room] = "Sala de Aula"
+          types[room] = "Sala de Aula"
 
         when "SmartRoom"
-          type[room] = "Sala Inteligente"
+          types[room] = "Sala Inteligente"
         
         when "RegularConferenceRoom"
-          type[room] = "Sala de Conferência comum"
+          types[room] = "Sala de Conferência comum"
 
         when "VideoConferenceRoom"
-          type[room] = "Sala de Vídeo Conferência"
+          types[room] = "Sala de Vídeo Conferência"
 
         when "Lab"
-          type[room] = "Laboratório"
+          types[room] = "Laboratório"
 
-      end
-      if(!type.empty?)
-        types.push(type)
       end
     end
 

@@ -1,51 +1,62 @@
-<nav class="navbar navbar-inverse">
-  <div class="container-fluid">
-    <!-- Brand and toggle get grouped for better mobile display -->
-    <div class="navbar-header">
-    	<p class="navbar-brand"> UnB Rooms</p>
-    </div>
-
-    <!-- Collect the nav links, forms, and other content for toggling -->
-    <div class="collapse navbar-collapse">
-      <ul class="nav navbar-nav pull-right">
-        <li><a href="#">Alocar sala</a></li>
-        <li><a href="#">Cancelar alocação</a></li>
-      </ul>
-    </div><!-- /.navbar-collapse -->
-  </div><!-- /.container-fluid -->
-</nav>
 <center>
-	<br>
-	<%= image_tag("classroom.png", :alt => "classroom") %>
+  <br>
+  <%= image_tag("classroom.png", :alt => "classroom") %>
   <h2>Alocador de salas</h2>
 </center>
-
 <div class="row">
-<div class="col-lg-2"></div>
-<div class="col-lg-8">
-	<h3> Buscar sala disponível </h3>
-	<hr>
-	<%= form_tag rooms_path, :method => "get" , id: "search-available-rooms-form" do%>
+  <div class="col-lg-2"></div>
+  <div class="col-lg-6">
+    <h3> Buscar sala disponível </h3>
+    <hr>
+    <%= form_tag rooms_path, :method => "get" , id: "search-available-rooms-form" do%>
 
-    <%= label_tag(:event_type, "Tipo do Evento") %>
-    <%= select_tag(:event_type_id,options_for_select([['Repetitivo', 1], ['Não Repetitivo', 2]]), {class: 'form_control'}) %>
+      <%= label_tag(:event_type, "Tipo do Evento") %>
+      <%= select_tag(:event_type_id,options_for_select([['Não Repetitivo', 1], ['Repetitivo', 2]]), {class: 'form-control', id: 'event_type_select'}) %>
 
-    <%= label_tag(:capacity, "Capacidade") %>
-    <%= number_field_tag(:capacity, params[:capacity], in: 1..400, step: 1) %>
-       <br>
-    <%= label_tag(:room_type, "Tipo de Sala") %>
-    <%= select_tag(:room_type_class, options_from_collection_for_select(@room_types.sort.map {|k,v| [v,k]})) %>
+      <br><br>
+      <%= label_tag(:room_type, "Tipo de Sala") %>
+      <%= select_tag(:room_type_class, options_for_select(@room_types.invert.to_a), {class: 'form-control'})%>
 
-    <div id="search_btn" >
-      <i class="fa fa-search"></i>
-      <%= submit_tag "Pesquisar", :name => nil, :class => "btn btn-primary"%>
+      <br><br>
+      <%= label_tag(:capacity, "Capacidade") %>
+      <%= number_field_tag(:capacity, params[:capacity], in: 1..400, step: 1) %>
+      
+      <br><br>
+      <%= label_tag(:date, "Data do Evento") %>
+
+      <div id="not_repetitive_date" style="display: inline;">
+        <%= date_field_tag(:initial_date)%>
+        a
+        <%= date_field_tag(:end_date)%>
+      </div>
+     
+      <div id="repetitive_date" style="display: none;">
+        <% @days_of_week.each do |day| %>
+          <%= check_box_tag "days_of_week[]", day %>
+          <%= day %>
+        <% end%>
+      </div>
+
+      <br><br>
+      <%= label_tag(:hour, "Hora do Evento") %>
+      <%= time_field_tag(:hour)%>
+
+    <div id="search_btn" class="pull-right">
+      <%= submit_tag "Buscar", :name => nil, :class => "btn btn-primary"%>
     </div>
-
-    <% end %>
-
-</div>
+  <% end %>
+  </div>
 </div>
 
-<footer class="footer" style="background-color:#c2c2c2">
-	<div>Class Room Icon made by <a href="http://www.freepik.com" title="Freepik">Freepik</a> from <a href="http://www.flaticon.com" title="Flaticon">www.flaticon.com</a> is licensed by <a href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0" target="_blank">CC 3.0 BY</a></div>
-</footer>
+<script type="text/javascript">
+  $("#event_type_select").on("click", function() {
+    if($("#event_type_select").val() == 2){
+      $("#not_repetitive_date").hide();
+      $("#repetitive_date").show();
+    }
+    else{
+      $("#repetitive_date").hide();
+      $("#not_repetitive_date").show();
+    }
+  });
+</script>
