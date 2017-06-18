@@ -25,7 +25,7 @@ regular_room_equipments = Equipment.create([{name: 'Carteira'}, {name: 'Mesa e C
 
 blackboard = Equipment.create(name: 'Quadro negro')
 whiteboard= Equipment.create(name: 'Quadro branco')
-projector = Equipment.create(name: 'Retroprojetor') 
+projector = Equipment.create(name: 'Retroprojetor')
 projector_screen = Equipment.create(name: 'Tela de projeção')
 tv = Equipment.create(name: 'TV')
 internet = Equipment.create(name: 'Internet')
@@ -62,3 +62,17 @@ lab1 = BiologyLab.create(capacity: 10, identifier:'LB1', nickname:'Laboratório 
 lab1 = PhysicsLab.create(capacity: 10, identifier:'LF1', nickname:'Laboratório de Física')
 lab1 = ComputerLab.create(capacity: 10, identifier:'LC1', nickname:'Laboratório de Computação', for_students: false)
 lab1 = ComputerLab.create(capacity: 30, identifier:'LC2', nickname:'Laboratório de Computação', for_students: true)
+
+semester = Semester.create(start_date: Date.new(2017, 02, 01), end_date: Date.new(2017, 07, 01), desc: '01_2017', current: true)
+
+event1 = RepetitiveEvent.create(name: 'Aula 1', responsible: 'Professor 1', start_time: Time.now, end_time: Time.now, days: ['Segunda', 'Quarta'])
+
+schedule = {
+    semester.id.to_s => {
+        DateTime.new(2017, 02, 01, 10, 0).to_time.to_i => event1.id.to_s,
+        DateTime.new(2017, 02, 01, 11, 00).to_time.to_i => event1.id.to_s
+    }
+}
+
+rooms1.schedule = schedule
+rooms1.save!
