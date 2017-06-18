@@ -1,11 +1,12 @@
 class Room
   include Mongoid::Document
-  
+
   has_and_belongs_to_many :equipments
-  
+
   field :capacity, type: Integer
   field :nickname, type: String
   field :identifier, type: String
+  field :schedule, type: Hash
 
   def self.get_types
     rooms = self.descendants.map(&:name).sort
@@ -17,7 +18,7 @@ class Room
 
         when "SmartRoom"
           types[room] = "Sala Inteligente"
-        
+
         when "RegularConferenceRoom"
           types[room] = "Sala de Conferência comum"
 
@@ -32,7 +33,6 @@ class Room
 
     return types
   end
-
 end
 
 class ClassRoom < Room

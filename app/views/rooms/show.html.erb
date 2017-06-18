@@ -1,0 +1,29 @@
+
+<h2 class="text-center">Dados da sala <%= @room.identifier %></h2>
+
+<b>Identificador da sala</b>: <%= @room.identifier || '-' %><br>
+<b>Apelido da sala</b>: <%= @room.nickname || '-' %><br>
+<b>Capacidade</b>: <%= @room.capacity || '-' %><br>
+
+<br>
+<br>
+<div class="row">
+  <div class="col-md-3">
+    <%=
+      link_to(
+        "Alocar sala para evento repetitivo",
+        room_allocate_repetitive_path(@room),
+        {class: "btn btn-lg"}
+      )
+    %>
+  </div>
+  <div class="col-md-3">
+    <%=
+      link_to(
+        "Alocar sala para evento NÃO repetitivo",
+        room_allocate_non_repetitive_path(@room),
+        {class: "btn btn-lg"}
+      )
+    %>
+  </div>
+</div>

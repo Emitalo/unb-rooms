@@ -4,8 +4,7 @@
   <h2>Alocador de salas</h2>
 </center>
 <div class="row">
-  <div class="col-lg-2"></div>
-  <div class="col-lg-6">
+  <div class="col-lg-8 col-lg-offset-2">
     <h3> Buscar sala disponível </h3>
     <hr>
     <%= form_tag rooms_path, :method => "get" , id: "search-available-rooms-form" do%>
@@ -20,7 +19,7 @@
       <br><br>
       <%= label_tag(:capacity, "Capacidade") %>
       <%= number_field_tag(:capacity, params[:capacity], in: 1..400, step: 1) %>
-      
+
       <br><br>
       <%= label_tag(:date, "Data do Evento") %>
 
@@ -29,7 +28,7 @@
         a
         <%= date_field_tag(:end_date)%>
       </div>
-     
+
       <div id="repetitive_date" style="display: none;">
         <% @days_of_week.each do |day| %>
           <%= check_box_tag "days_of_week[]", day %>

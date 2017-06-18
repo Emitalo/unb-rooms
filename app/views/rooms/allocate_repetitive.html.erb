@@ -1,0 +1,33 @@
+
+<h2 class="text-center">Alocação da sala <%= @room.identifier %> para evento repetitivo</h2>
+
+<h4><i class="fa fa-book"></i> Dados do evento
+  <br>
+  <small>Informe os dados do evento que ocorrerá nessa sala.</small>
+</h4>
+<br>
+
+<%= form_tag room_allocate_path, :method => "post" , id: "allocate-room-form" do %>
+
+  <%= hidden_field_tag :event_type, "RepetitiveEvent" %>
+
+  <div class="row">
+    <div class="col-md-4">
+      <%= label_tag(:name, "Nome do evento") %>
+      <%= text_field_tag(:name, '', {class: 'form-control'}) %>
+    </div>
+    <div class="col-md-4">
+      <%= label_tag(:responsible, "Responsável pela sala") %>
+      <%= text_field_tag(:responsible, '', {class: 'form-control'}) %>
+    </div>
+  </div>
+
+  <br>
+  <div class="row">
+    <div class="col-md-12">
+      <div id="new_event_btn" >
+        <%= submit_tag "Novo evento para a sala #{@room.identifier}", class: "btn btn-primary btn-lg btn-block"%>
+      </div>
+    </div>
+  </div>
+<% end %>
