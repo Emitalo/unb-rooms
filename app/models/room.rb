@@ -8,30 +8,12 @@ class Room
   field :identifier, type: String
   field :schedule, type: Hash
 
-  def self.get_types
-    rooms = self.descendants.map(&:name).sort
+  def self.types
     types = {}
-    rooms.each do |room|
-      case room
-        when "RegularClassRoom"
-          types[room] = "Sala de Aula"
-
-        when "SmartRoom"
-          types[room] = "Sala Inteligente"
-
-        when "RegularConferenceRoom"
-          types[room] = "Sala de Conferência comum"
-
-        when "VideoConferenceRoom"
-          types[room] = "Sala de Vídeo Conferência"
-
-        when "Lab"
-          types[room] = "Laboratório"
-
-      end
+    descendants.each do |type|
+      types[type.name] = type::NAME if type.const_defined? 'NAME'
     end
-
-    return types
+    types
   end
 end
 
@@ -41,10 +23,14 @@ end
 
 class RegularClassRoom < ClassRoom
   include Mongoid::Document
+
+  NAME = 'Sala de aula'.freeze
 end
 
 class SmartRoom < RegularClassRoom
   include Mongoid::Document
+
+  NAME = 'Sala Inteligente'.freeze
 end
 
 class ConferenceRoom < ClassRoom
@@ -53,8 +39,12 @@ end
 
 class VideoConferenceRoom < ConferenceRoom
   include Mongoid::Document
+
+  NAME = 'Sala de Vídeo Conferência'.freeze
 end
 
 class RegularConferenceRoom < ConferenceRoom
   include Mongoid::Document
+
+  NAME = 'Sala de Conferência comum'.freeze
 end
