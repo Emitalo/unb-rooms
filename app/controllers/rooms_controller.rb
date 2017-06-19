@@ -1,6 +1,6 @@
 class RoomsController < ApplicationController
   def index
-  	@room_type = params[:room_type_class]
+    @available_rooms = Room.find_availables(params)
   end
 
   def show

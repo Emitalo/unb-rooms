@@ -17,6 +17,7 @@ ChemistryLab.destroy_all
 BiologyLab.destroy_all
 PhysicsLab.destroy_all
 ComputerLab.destroy_all
+Semester.destroy_all
 
 # Creating equipments
 

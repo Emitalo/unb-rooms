@@ -3,6 +3,14 @@
   <div class="col-lg-6">
     <h3> Salas disponíveis </h3>
     <hr>
-   
+    <div class="list-group">
+	   	<% @available_rooms.each do |available_room| %>
+	  		<%= link_to(
+		        available_room.nickname,
+		        room_path(available_room.id),
+		        {class: "list-group-item"}
+		    )%>
+	   	<% end %>
+	</div>
   </div>
 </div>

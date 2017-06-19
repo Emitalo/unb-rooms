@@ -30,8 +30,8 @@
       </div>
 
       <div id="repetitive_date" style="display: none;">
-        <% @days_of_week.each do |day| %>
-          <%= check_box_tag "days_of_week[]", day %>
+        <% @days_of_week.each do |id, day| %>
+          <%= check_box_tag "days_of_week[]", id %>
           <%= day %>
         <% end%>
       </div>
@@ -46,6 +46,7 @@
   <% end %>
   </div>
 </div>
+<br>
 
 <script type="text/javascript">
   $("#event_type_select").on("click", function() {
