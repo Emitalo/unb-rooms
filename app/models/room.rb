@@ -60,6 +60,14 @@ class Room
   def self.get_available_room_for_not_repetitive_event(initial_date, end_date, hour, available_rooms)
     return nil
   end
+
+  def allocate(event)
+    return unless respond_to?(:can_allocate?) && can_allocate?(event)
+  end
+
+  def can_allocate?(_event)
+    raise NotImplementedError
+  end
 end
 
 class ClassRoom < Room

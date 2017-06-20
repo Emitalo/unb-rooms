@@ -10,8 +10,8 @@ end
 class RepetitiveEvent < Event
   include Mongoid::Document
 
-  field :start_time, type: Time
-  field :end_time, type: Time
+  field :start_time, type: String
+  field :end_time, type: String
   field :days, type: Array
 end
 

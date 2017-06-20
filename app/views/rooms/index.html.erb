@@ -4,12 +4,14 @@
     <h3> Salas disponíveis </h3>
     <hr>
     <div class="list-group">
-	   	<% @available_rooms.each do |available_room| %>
-	  		<%= link_to(
-		        available_room.nickname,
-		        room_path(available_room.id),
-		        {class: "list-group-item"}
-		    )%>
+        <% if @available_rooms %>
+    	   	<% @available_rooms.each do |available_room| %>
+    	  		<%= link_to(
+    		        available_room.nickname,
+    		        room_path(available_room.id),
+    		        {class: "list-group-item"}
+    		    )%>
+            <% end %>
 	   	<% end %>
 	</div>
   </div>
