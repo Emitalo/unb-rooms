@@ -77,9 +77,10 @@ class Room
         schedule_for_semester = schedule[current_semester.id.to_s]
         if(schedule_for_semester != nil)
           schedule_for_semester.each do |event_datetime, event_id|
-            date = Time.at(event_datetime.to_i).to_datetime
+            date = Time.at(event_datetime.to_i).utc.to_datetime
             hour_on_date = date.strftime("%H")
-            if(hours.include?(hour_on_date) && days.include?(date.cwday.to_s))
+            date_to_test = date.strftime("%d/%m/%Y")
+            if(hours.include?(hour_on_date) && days.include?(date_to_test))
               can_add_room = false
               break
             end
