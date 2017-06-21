@@ -6,17 +6,10 @@
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
 
-Room
-Lab
-Event
+Room.destroy_all
+Lab.destroy_all
+Event.destroy_all
 Equipment.destroy_all
-RegularClassRoom.destroy_all
-SmartRoom.destroy_all
-VideoConferenceRoom.destroy_all
-ChemistryLab.destroy_all
-BiologyLab.destroy_all
-PhysicsLab.destroy_all
-ComputerLab.destroy_all
 Semester.destroy_all
 
 # Creating equipments
