@@ -2,6 +2,7 @@ class Room
   include Mongoid::Document
 
   has_and_belongs_to_many :equipments
+  has_many :events
 
   field :capacity, type: Integer
   field :nickname, type: String
@@ -66,7 +67,7 @@ class Room
   end
 
   def can_allocate?(_event)
-    raise NotImplementedError
+    true
   end
 end
 

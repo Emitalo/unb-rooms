@@ -2,6 +2,7 @@ class Event
   include Mongoid::Document
 
   belongs_to :semester
+  belongs_to :room
 
   field :name, type: String
   field :responsible, type: String

@@ -26,6 +26,13 @@
     </nav>
 
     <div class="container-fluid">
+      <% flash.each do |name, msg| -%>
+        <div class="alert alert-info">
+          <%= msg %>
+        </div>
+      <% end -%>
+      <br>
+      <br>
       <%= yield %>
     </div>
   </body>
