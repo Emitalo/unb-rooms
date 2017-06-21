@@ -22,44 +22,86 @@ class Room
   def self.find_availables(params)
     type = params[:room_type_class].constantize
     available_rooms = type.where(:capacity.gte => params[:capacity])
+    start_time = params[:start_time].split(':')
+    end_time = params[:end_time].split(':')
     if(params[:event_type_id] == self::REPETITIVE_ID)
-      self.get_available_room_for_repetitive_event(params[:days_of_week], params[:hour], available_rooms)
+      available_rooms = self.get_available_room_for_repetitive_event(params[:days_of_week], start_time, \
+                        end_time, available_rooms)
     else
-      self.get_available_room_for_not_repetitive_event(params[:initial_date], params[:end_date], params[:hour], available_rooms)
+      available_rooms = self.get_available_room_for_not_repetitive_event(params[:days], start_time, end_time, available_rooms)
     end
 
     available_rooms
   end
 
-  def self.get_available_room_for_repetitive_event(days_of_week, hour, available_rooms)
+  def self.get_available_room_for_repetitive_event(days_of_week, initial_hour, end_hour, available_rooms)
     rooms = []
     current_semester = Semester.current_semester
-    days_on_dates = []
+    hours = self.get_hours_range(initial_hour, end_hour)
     available_rooms.each do |available_room|
+      can_add_room = true
       schedule = available_room.schedule
       if(schedule == nil)
         rooms.push(available_room)
       else
         schedule_for_semester = schedule[current_semester.id.to_s]
-        can_add_room = true
-        schedule_for_semester.each do |event_datetime, event_id|
-          date = Time.at(event_datetime.to_i).to_datetime
-          hour_on_date = date.strftime("%H") + ":" + date.strftime("%M")
-          if(hour_on_date == hour && days_of_week.include?(date.cwday))
-            can_add_room = false
+        if(schedule_for_semester != nil)
+          schedule_for_semester.each do |event_datetime, event_id|
+            date = Time.at(event_datetime.to_i).utc.to_datetime
+            hour_on_date = date.strftime("%H")
+            if(hours.include?(hour_on_date) && days_of_week.include?(date.cwday.to_s))
+              can_add_room = false
+              break
+            end
           end
-        end
 
-        if(can_add_room)
-          rooms.push(available_room)
+          if(can_add_room)
+            rooms.push(available_room)
+          end
         end
       end
     end
     rooms
   end
 
-  def self.get_available_room_for_not_repetitive_event(initial_date, end_date, hour, available_rooms)
-    return nil
+  def self.get_available_room_for_not_repetitive_event(days, initial_hour, end_hour, available_rooms)
+    rooms = []
+    current_semester = Semester.current_semester
+    hours = self.get_hours_range(initial_hour, end_hour)
+    available_rooms.each do |available_room|
+      can_add_room = true
+      schedule = available_room.schedule
+      if(schedule == nil)
+        rooms.push(available_room)
+      else
+        schedule_for_semester = schedule[current_semester.id.to_s]
+        if(schedule_for_semester != nil)
+          schedule_for_semester.each do |event_datetime, event_id|
+            date = Time.at(event_datetime.to_i).to_datetime
+            hour_on_date = date.strftime("%H")
+            if(hours.include?(hour_on_date) && days.include?(date.cwday.to_s))
+              can_add_room = false
+              break
+            end
+          end
+
+          if(can_add_room)
+            rooms.push(available_room)
+          end
+        end
+      end
+    end
+    rooms
+  end
+
+  def self.get_hours_range(initial_hour, end_hour)
+    hours = []
+    (initial_hour[0].to_i..end_hour[0].to_i).each do |hour|
+      hour_to_add = hour.to_s.size == 1 ? "0" + hour.to_s : hour.to_s
+      hours.push(hour_to_add)
+    end
+
+    hours
   end
 
   def allocate(event)

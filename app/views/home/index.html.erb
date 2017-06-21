@@ -24,9 +24,7 @@
       <%= label_tag(:date, "Data do Evento") %>
 
       <div id="not_repetitive_date" style="display: inline;">
-        <%= date_field_tag(:initial_date)%>
-        a
-        <%= date_field_tag(:end_date)%>
+        <input type='text' class="form-control" id='days' name="days"/>
       </div>
 
       <div id="repetitive_date" style="display: none;">
@@ -35,11 +33,24 @@
           <%= day %>
         <% end%>
       </div>
-
       <br><br>
-      <%= label_tag(:hour, "Hora do Evento") %>
-      <%= time_field_tag(:hour)%>
-
+      <div class="row">
+        <div class="col-lg-6">
+          <%= label_tag(:hour, "Hora inicial") %>
+          <div class="input-group bootstrap-timepicker timepicker">
+            <input id="start_time" name="start_time" type="text" class="form-control input-small" placeholder="Hora inicial">
+            <span class="input-group-addon"><i class="fa fa-clock-o"></i></span>
+          </div>
+        </div>
+        <div class="col-lg-6">
+          <%= label_tag(:hour, "Hora final") %>
+          <div class="input-group bootstrap-timepicker timepicker">
+            <input id="end_time" name="end_time" type="text" class="form-control input-small" placeholder="Hora final">
+            <span class="input-group-addon"><i class="fa fa-clock-o"></i></span>
+          </div>
+        </div>
+      </div>
+      <br><br>
     <div id="search_btn" class="pull-right">
       <%= submit_tag "Buscar", :name => nil, :class => "btn btn-primary"%>
     </div>
@@ -49,14 +60,36 @@
 <br>
 
 <script type="text/javascript">
-  $("#event_type_select").on("click", function() {
-    if($("#event_type_select").val() == 2){
-      $("#not_repetitive_date").hide();
-      $("#repetitive_date").show();
-    }
-    else{
-      $("#repetitive_date").hide();
-      $("#not_repetitive_date").show();
-    }
+
+  $(document).ready(function(){
+    var options = {
+      maxHours: 24,
+      showMeridian: false,
+      minuteStep: 60,
+      defaultTime: false,
+      icons: {
+        up: 'fa fa-chevron-up',
+        down: 'fa fa-chevron-down'
+      }
+    };
+    $('#start_time').timepicker(options);
+    $('#end_time').timepicker(options);
+    $('#days').datepicker({
+      multidate: true,
+      language: 'pt'
+    });
+
+    $("#event_type_select").on("click", function() {
+      if($("#event_type_select").val() == 2){
+        $("#not_repetitive_date").hide();
+        $("#repetitive_date").show();
+      }
+      else{
+        $("#repetitive_date").hide();
+        $("#not_repetitive_date").show();
+      }
+    });
+  
+
   });
 </script>

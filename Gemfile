@@ -39,6 +39,8 @@ gem "less-rails"
 gem "twitter-bootstrap-rails"
 gem "font-awesome-rails"
 gem 'bootstrap-timepicker-rails'
+gem 'bootstrap-datepicker-rails'
+
 
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
