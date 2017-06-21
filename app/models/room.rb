@@ -112,6 +112,14 @@ class Room
   def can_allocate?(_event)
     true
   end
+
+  def cancel_event(event, semester: nil)
+    semester = semester.nil? ? Semester.current_semester : semester
+    schedule[semester.id.to_s].each do |key, registered_event|
+      schedule[semester.id.to_s].delete(key) if registered_event == event.id.to_s
+    end
+    save!
+  end
 end
 
 class ClassRoom < Room
