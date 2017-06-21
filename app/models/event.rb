@@ -6,6 +6,9 @@ class Event
 
   field :name, type: String
   field :responsible, type: String
+  field :start_time, type: String
+  field :end_time, type: String
+  field :days, type: Array
 
   DAYS_OF_WEEK = {
     1 => 'Segunda', 2 => 'Terça',
@@ -28,19 +31,14 @@ class Event
     events = events.where(responsible: /#{responsible}/i) unless responsible.to_s.empty?
     events
   end
+  
 end
 
 class RepetitiveEvent < Event
   include Mongoid::Document
 
-  field :start_time, type: String
-  field :end_time, type: String
-  field :days, type: Array
 end
 
 class NonRepetitiveEvent < Event
   include Mongoid::Document
-
-  field :start_time, type: DateTime
-  field :end_time, type: DateTime
 end

@@ -77,3 +77,6 @@ schedule = {
 
 rooms1.schedule = schedule
 rooms1.save!
+
+roomr2 = RegularConferenceRoom.create(capacity: 10, identifier:'V2', nickname:'V2')
+roomr.equipments = [internet, cameras]

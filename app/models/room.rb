@@ -12,6 +12,7 @@ class Room
   REPETITIVE_ID = "2"
 
   def self.types
+    Lab
     types = {}
     descendants.each do |type|
       types[type.name] = type::NAME if type.const_defined? 'NAME'
@@ -21,7 +22,12 @@ class Room
 
   def self.find_availables(params)
     type = params[:room_type_class].constantize
-    available_rooms = type.where(:capacity.gte => params[:capacity])
+    if(params[:capacity] != "" && params[:capacity] != nil)
+      available_rooms = type.where(:capacity.gte => params[:capacity])
+    else
+      available_rooms = type.all()
+    end
+
     start_time = params[:start_time].split(':')
     end_time = params[:end_time].split(':')
     if(params[:event_type_id] == self::REPETITIVE_ID)

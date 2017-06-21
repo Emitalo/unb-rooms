@@ -40,12 +40,14 @@
     %>
   </div>
   <div class="col-md-3">
-    <%=
-      link_to(
-        "Alocar sala para evento NÃO repetitivo",
-        room_allocate_non_repetitive_path(@room),
-        {class: "btn btn-lg"}
-      )
-    %>
+    <%if @room._type != "RegularConferenceRoom" %>
+      <%=
+        link_to(
+          "Alocar sala para evento NÃO repetitivo",
+          room_allocate_non_repetitive_path(@room),
+          {class: "btn btn-lg"}
+        )
+      %>
+    <% end %>
   </div>
 </div>

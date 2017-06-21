@@ -4,7 +4,7 @@
     <h3> Salas disponíveis </h3>
     <hr>
     <div class="list-group">
-        <% if @available_rooms %>
+        <% if @available_rooms.size != 0 %>
     	   	<% @available_rooms.each do |available_room| %>
     	  		<%= link_to(
     		        available_room.nickname,
@@ -12,6 +12,8 @@
     		        {class: "list-group-item"}
     		    )%>
             <% end %>
+      <% else %>
+        <div class="alert alert-info">Não há salas disponíveis.</div>
 	   	<% end %>
 	</div>
   </div>

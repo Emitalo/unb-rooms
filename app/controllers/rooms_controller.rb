@@ -16,6 +16,39 @@ class RoomsController < ApplicationController
     @room = Room.find params[:room_id]
   end
 
+  def allocate_non_repetitive_event
+    Event
+    room = Room.find params[:room_id]
+
+    event_params = non_repetitive_event_params
+    start_time = event_params[:start_time].split(':')
+    end_time = event_params[:end_time].split(':')
+
+    days = params[:days]
+    days = days.split(",")
+
+    semester = Semester.current_semester
+    event = NonRepetitiveEvent.new event_params
+    event.semester = semester
+    event.room = room
+    event.save!
+
+    days.each do |day|
+      (start_time[0].to_i..(end_time[0].to_i - 1)).each do |hour|
+        time = day + " " + hour.to_s
+        datetime = DateTime.strptime(time, "%d/%m/%Y %H")
+        room.schedule = {} if room.schedule.nil?
+        room.schedule[semester.id.to_s] = {} if room.schedule[semester.id.to_s].nil?
+        room.schedule[semester.id.to_s][datetime.to_time.to_i] = event.id.to_s unless room.schedule.has_key?(datetime.to_time.to_i)
+      end
+    end
+
+    room.save!
+
+    flash[:notice] = "Evento alocado para sala #{room.identifier}!"
+    render :index
+  end
+
   def allocate_repetitive_event
     Event
     room = Room.find params[:room_id]
@@ -49,19 +82,11 @@ class RoomsController < ApplicationController
     render :index
   end
 
-  def allocate_non_repetitive_event
-    room = Room.find params[:room_id]
-    event = NonRepetitiveEvent.new non_repetitive_event_params
-  end
-
   def repetitive_event_params
     params.permit(:name, :responsible, :start_time, :end_time, days: [])
   end
 
   def non_repetitive_event_params
-    params.permit(
-      :name, :responsible,
-      :days, :start_time, :end_time
-    )
+    params.permit(:name, :responsible, :start_time, :end_time, days: [])
   end
 end
