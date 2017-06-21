@@ -9,4 +9,8 @@ Rails.application.routes.draw do
     post 'allocate/repetitive_event', to: 'rooms#allocate_repetitive_event'
     post 'allocate/non_repetitive_event', to: 'rooms#allocate_non_repetitive_event'
   end
+
+  resources :events
+  get 'event/search', to: 'events#search'
+
 end

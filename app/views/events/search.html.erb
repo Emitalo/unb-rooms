@@ -1,0 +1,22 @@
+<h3><i class="fa fa-list"></i> Eventos encontrados: </h3>
+<br>
+<div class="row">
+  <% @events.each do |event| %>
+    <div class="col-md-4">
+      <div class="panel panel-default">
+        <div class="panel-heading"><h4 class="text-center"><%= event.name %></h4></div>
+        <div class="panel-body">
+          <p><b>Responsável:</b> <%= event.responsible %></p>
+          <p><b>Hora de início:</b> <%= event.start_time %></p>
+          <p><b>Hora de término:</b> <%= event.end_time %></p>
+          <% if event.respond_to?(:days) && !event.days.nil? %>
+            <p><b>Dias:</b> <%= event.print_days_of_week %></p>
+          <% end %>
+        </div>
+        <div class="panel-footer">
+          <%= link_to "Cancelar evento", events_path, class: 'btn btn-block btn-danger' %>
+        </div>
+      </div>
+    </div>
+  <% end %>
+</div>

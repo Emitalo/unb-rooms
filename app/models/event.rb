@@ -21,6 +21,13 @@ class Event
     end unless days.nil?
     days_of_week
   end
+
+  def self.find_events(name, responsible)
+    events = where({})
+    events = events.where(name: /#{name}/i) unless name.to_s.empty?
+    events = events.where(responsible: /#{responsible}/i) unless responsible.to_s.empty?
+    events
+  end
 end
 
 class RepetitiveEvent < Event

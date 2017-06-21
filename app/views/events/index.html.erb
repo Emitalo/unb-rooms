@@ -1,0 +1,38 @@
+<center>
+  <br>
+  <%= image_tag("classroom.png", :alt => "classroom") %>
+  <h2>Alocador de salas</h2>
+</center>
+<div class="row">
+  <div class="col-lg-8 col-lg-offset-2">
+    <h3><i class="fa fa-search"></i> Pesquisar eventos </h3>
+    <hr>
+    <%= form_tag event_search_path, :method => "get" do %>
+
+      <br>
+
+      <div class="row">
+        <div class="col-md-6">
+          <%= label_tag(:name, "Nome do evento") %>
+          <%= text_field_tag(:name, '', class: 'form-control') %>
+        </div>
+        <div class="col-md-6">
+          <%= label_tag(:responsible, "Responsável pela sala") %>
+          <%= text_field_tag(:responsible, '', {class: 'form-control'}) %>
+        </div>
+      </div>
+
+      <br>
+      <br>
+      <div class="row">
+        <div class="col-md-12">
+          <div id="search_event_btn" >
+            <%= submit_tag "Buscar eventos", class: "btn btn-primary btn-lg btn-block"%>
+          </div>
+        </div>
+      </div>
+
+  <% end %>
+  </div>
+</div>
+<br>
