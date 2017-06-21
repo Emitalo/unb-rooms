@@ -9,7 +9,7 @@ class RoomsController < ApplicationController
 
   def allocate_repetitive
     @room = Room.find params[:room_id]
-    @days_of_week = {1 => 'Segunda', 2 => 'Terça', 3 => 'Quarta', 4 => 'Quinta', 5 => 'Sexta'}
+    @days_of_week = Event::DAYS_OF_WEEK
   end
 
   def allocate_non_repetitive

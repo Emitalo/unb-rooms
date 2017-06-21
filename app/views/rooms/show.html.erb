@@ -5,6 +5,25 @@
 <b>Apelido da sala</b>: <%= @room.nickname || '-' %><br>
 <b>Capacidade</b>: <%= @room.capacity || '-' %><br>
 
+<h3>Eventos desta sala: </h3>
+<div class="row">
+  <% @room.events.each do |event| %>
+    <div class="col-md-4">
+      <div class="panel panel-default">
+        <div class="panel-header"><%= event.name %></div>
+        <div class="panel-body">
+          <p><b>Responsável:</b> <%= event.responsible %></p>
+          <p><b>Hora de início:</b> <%= event.start_time %></p>
+          <p><b>Hora de término:</b> <%= event.end_time %></p>
+          <% if event.respond_to?(:days) && !event.days.nil? %>
+            <p><b>Dias:</b> <%= event.print_days_of_week %></p>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  <% end %>
+</div>
+
 <br>
 <br>
 <div class="row">
