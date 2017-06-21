@@ -23,7 +23,6 @@ class RoomsController < ApplicationController
     event_params = repetitive_event_params
     start_time = event_params[:start_time].split(':')
     end_time = event_params[:end_time].split(':')
-
     days = params[:days]
 
     semester = Semester.current_semester
@@ -42,8 +41,9 @@ class RoomsController < ApplicationController
         end
       end
     end
-
     room.save!
+
+    Allocation.create! room: room, event: event
 
     flash[:notice] = "Evento alocado para sala #{room.identifier}!"
     render :index
